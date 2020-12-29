@@ -1,0 +1,42 @@
+{
+    "description": "XHPL CI/CD cluster POC",
+    "builders": [
+        {
+            "guest_os_type": "centos-64",
+            "headless": true,
+            "iso_checksum": "{{ user `checksum` }}",
+            "iso_urls": [
+                "{{ user `iso` }}"
+            ],
+            "name": "{{ user `server_name` }}",
+            "output_directory": "/tmp",
+            "source_path": "",
+            "ssh_port": 22,
+            "ssh_private_key_file": "",
+            "ssh_timeout": "1m",
+            "ssh_username": "packer",
+            "type": "vmware-iso",
+            "vm_name": "{{ user `distro` }}-{{ user `server_name` }}",
+            "vmx_data": {
+                "disk_size": "{{ user `disk_size` }}",
+                "ethernet0.connectionType": "bridge",
+                "numvcpus": "{{ user `cpus` }}",
+                "memsize": "{{ user `mem` }}"
+            }
+        },
+        "http_directory": "http",
+        "boot_command": [
+                "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"
+            ],
+        "shutdown_command": "sudo shutdown -h now"
+    ],
+    "variables": {
+        "vm-cpus": "2",
+        "vm-disk_size": "32768",
+        "vm-mem": "32768",
+        "vm-server_name": "dixie",
+        "distro": "centos-7.8-x86_64",
+        "iso": "/Users/rcon/Desktop/tmp/CentOS-7-x86_64-DVD-2003.iso",
+        "checksum": "sha1:ab6f6bab124cd749a69ae63dc3b5fbfa4d0e52b5"
+    }
+}
