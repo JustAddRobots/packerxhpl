@@ -1,0 +1,19 @@
+---
+- name: Install avahi
+  yum:
+      name:
+        - avahi
+      state: present
+
+- name: Add mdns4 to nsswtich
+  lineinfile:
+      dest: /etc/nsswitch.conf
+      line: "hosts:\tfiles mdns4_minimal [NOTFOUND=return] dns myhostname mdns4"
+      regexp: "^hosts:.*$"
+      state: present
+
+- name: Start avahi-daemon
+  systemd:
+    name: avahi-daemon
+    state: started
+    enabled: true

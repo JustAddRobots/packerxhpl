@@ -1,0 +1,14 @@
+---
+- name: Download node repo installer
+  get_url:
+      dest: /tmp/node-installer.sh
+      url: https://rpm.nodesource.com/setup_10.x
+
+- name: Run node repo installer
+  shell: /tmp/node-repo-installer.sh
+
+- name: Install node
+  yum:
+      name:
+        - nodejs
+      state: present

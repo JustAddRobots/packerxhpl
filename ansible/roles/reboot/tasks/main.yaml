@@ -1,0 +1,9 @@
+---
+- name: Reboot
+  become: yes
+  tasks:
+  - name: Reboot in 10 s
+    reboot:
+      pre_reboot_delay: 10
+      reboot_timeout: 300
+      test_command: "uptime"            

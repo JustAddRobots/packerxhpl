@@ -1,0 +1,23 @@
+---
+- name: Add jenkins repo
+  yum_repository:
+    baseurl: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+    description: Jenkins repo
+    file: jenkins
+    gpgcheck: true
+    gpgkey: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+    name: jenkins
+
+- name: Install jenkins
+  yum:
+      name:
+        - gcc-c++
+        - jenkins
+        - make
+      state: present
+
+- name: Start jenkins
+  systemd:
+    name: jenkins
+    state: started
+    enabled: true

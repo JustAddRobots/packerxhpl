@@ -1,0 +1,29 @@
+---
+- name: Set inventory hostname
+  hostname:
+      name: "{{ inventory_hostname }}"
+
+- name: Disable SELinux
+  ansible.posix.selinux:
+    state: disabled
+
+- name: Disable swap
+  shell: |
+    swapoff -a
+
+- name: Disable swap in fstab
+  replace:
+    path: /etc/fstab
+    regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
+    replace: '# \1'
+
+- name: Stop firewalld
+  systemd:
+    name: firewalld
+    state: stopped
+    enabled: false
+
+- name: Upgrade yum
+  yum:
+    name: "*"
+    state: latest

@@ -1,0 +1,49 @@
+{
+    "description": "XHPL CI/CD cluster POC",
+    "builders": [
+        {
+            "boot_command": [
+                "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks-controller.cfg<enter><wait>"
+            ],
+            "cpus": "{{ user `vm-cpus` }}",
+            "disk_size": "{{ user `vm-disk_size` }}",
+            "guest_os_type": "centos-64",
+            "headless": false,
+            "http_directory": "http",
+            "iso_checksum": "{{ user `checksum` }}",
+            "iso_urls": [
+                "{{ user `iso` }}"
+            ],
+            "memory": "{{ user `vm-mem` }}",
+            "name": "{{ user `vm-server_name` }}",
+            "network": "nat",
+            "output_directory": "/tmp/packer",
+            "ssh_password": "{{ user `ssh_pass` }}",
+            "ssh_port": 22,
+            "ssh_timeout": "10m",
+            "ssh_username": "{{ user `ssh_user` }}",
+            "type": "vmware-iso",
+            "vm_name": "{{ user `distro` }}-{{ user `vm-server_name` }}"
+    }],
+    "provisioners": [
+        {
+            "type": "ansible",
+            "playbook_file": "ansible/test.yaml"
+        }
+    ],
+    "variables": {
+        "checksum": "sha1:ab6f6bab124cd749a69ae63dc3b5fbfa4d0e52b5",
+        "distro": "centos-7.8-x86_64",
+        "dns": "192.168.161.2",
+        "gateway": "192.168.161.2",
+        "iso": "/Users/rcon/Desktop/tmp/CentOS-7-x86_64-DVD-2003.iso",
+        "ipaddr": "192.168.161.89",
+        "netmask": "255.255.255.0",
+        "ssh_user": "packer",
+        "ssh_pass": "packer",
+        "vm-cpus": "2",
+        "vm-disk_size": "16384",
+        "vm-mem": "16384",
+        "vm-server_name": "packer"
+    }
+}
