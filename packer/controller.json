@@ -20,7 +20,7 @@
             "output_directory": "/tmp/packer",
             "ssh_password": "{{ user `ssh_pass` }}",
             "ssh_port": 22,
-            "ssh_timeout": "10m",
+            "ssh_timeout": "15m",
             "ssh_username": "{{ user `ssh_user` }}",
             "type": "vmware-iso",
             "vm_name": "{{ user `distro` }}-{{ user `vm-server_name` }}"
