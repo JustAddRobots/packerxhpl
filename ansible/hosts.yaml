@@ -1,7 +1,7 @@
 ---
 controllers:
     hosts:
-        controller0:
+        controller:
 
 workers:
     hosts:

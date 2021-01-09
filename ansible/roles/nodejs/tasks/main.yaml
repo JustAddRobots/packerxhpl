@@ -1,10 +1,10 @@
 ---
-- name: Download node repo installer
+- name: Download nodejs repo installer
   get_url:
       dest: /tmp/node-installer.sh
       url: https://rpm.nodesource.com/setup_10.x
 
-- name: Run node repo installer
+- name: Run nodejs repo installer
   shell: /tmp/node-repo-installer.sh
 
 - name: Install node

@@ -1,8 +1,10 @@
 ---
 - hosts: default
   become: true
-  become_user: packer
   roles:
+    - useradd
+    - publickey
     - common
+    - hostnamectl
     - avahi
     - shutdown
