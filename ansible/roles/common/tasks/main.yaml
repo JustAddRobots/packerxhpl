@@ -23,3 +23,6 @@
   yum:
     name: "*"
     state: latest
+
+- name: Rebuild initramfs
+  shell: dracut -f -v

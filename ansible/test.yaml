@@ -1,5 +1,5 @@
 ---
-- hosts: default
+- hosts: controller
   become: true
   roles:
     - useradd
@@ -7,4 +7,4 @@
     - common
     - hostnamectl
     - avahi
-    - shutdown
+    - reboot
