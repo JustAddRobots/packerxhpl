@@ -1,0 +1,6 @@
+---
+ssl_dir: /etc/ssl
+ssl_file_prefix: ansible-selfsigned
+ssl_private_key_file: "{{ ssl_dir }}/private/{{ ssl_file_prefix }}.pem"
+ssl_csr_file: "{{ ssl_dir }}/csr/{{ ssl_file_prefix }}.csr"
+ssl_crt_file: "{{ ssl_dir }}/certs/{{ ssl_file_prefix }}.crt"

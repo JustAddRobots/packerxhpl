@@ -19,10 +19,10 @@
     state: stopped
     enabled: false
 
-- name: Upgrade yum
-  yum:
-    name: "*"
-    state: latest
+#- name: Upgrade yum
+#  yum:
+#    name: "*"
+#    state: latest
 
 - name: Rebuild initramfs
   shell: dracut -f -v

@@ -1,4 +1,7 @@
 ---
+dependencies:
+  - openssl
+
 - name: Start Nginx
   systemd:
     name: nginx
