@@ -13,9 +13,10 @@ BRANCH=""
 HASH_CHANGELOG=""
 TAG_DATE=""
 TAG_MSG=""
+PLATFORM=$(uname -s)
 
 usage() {
-    cat << EOF
+cat << EOF
 USAGE:
     $0  [ -h | --help ]
     $0  [ -v | --verbose ] [ -r | --rm ] ( -p | --part part )
@@ -48,7 +49,14 @@ EOF
 
 # Set CLI parameters
 if [[ $# -lt 2 ]]; then usage; exit; fi
-ARGS=$(getopt -n $0 -o hvrp: -l "help,verbose,rm,part:" -- "$@")
+
+# getopt long options unsupported in MacOS
+if [[ $PLATFORM == "Darwin" ]]; then
+    ARGS=$(getopt hvrp: "$*")
+else
+    ARGS=$(getopt -n $0 -o hvrp: -l "help,verbose,rm,part:" -- "$@")
+fi
+
 if [[ $? -ne 0 ]]; then usage; exit; fi
 eval set --  "$ARGS"
 while true; do
@@ -81,7 +89,9 @@ while true; do
     esac
 done
 
-if [[ $PART == "" ]]; then usage; fi
+# echo -e "PLATFORM: $PLATFORM\n0: $0\n1: $1\n2: $2\nARGS: $ARGS\nPART: $PART"
+
+if [[ $PART == "" ]]; then usage; exit; fi
 
 # Set log/lockfiles based on timestamp
 TIMESTAMP=$(date +%Y%m%d.%H%M%S)
