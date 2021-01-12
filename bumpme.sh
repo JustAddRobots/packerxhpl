@@ -22,8 +22,8 @@ USAGE:
     $0  [ -v | --verbose ] [ -r | --rm ] ( -p | --part part )
 
 This script bumps the semantic version and automatically creates 
-a changelog for releases. It requires bump2version, gitchangelog, and git.
-Must be run from 'stage' branch.
+a changelog for releases. It requires bump2version, gitchangelog, 
+pystache, and git. It must be run from 'stage' branch.
 
 ARGS:
     -p, --part      part of the version to increase. Version scheme:
@@ -100,7 +100,7 @@ LOCKFILE="/tmp/bumpme.$TIMESTAMP.lock"
 
 check_commands() {
     if [[ $VERBOSE -eq 1 ]]; then echo "INFO: check_commands"; fi
-    for i in git gitchangelog bump2version; do
+    for i in git gitchangelog bump2version pystache; do
         if ! command -v $i &> /dev/null; then
             echo -e "ERROR: $i not found! Exiting"
             exit 1
