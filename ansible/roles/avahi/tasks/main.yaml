@@ -3,7 +3,8 @@
   yum:
       name:
         - avahi
-      state: present
+  vars:
+    ansible_python_interpreter: /usr/bin/python
 
 - name: Add mdns4 to nsswtich
   lineinfile:

@@ -7,4 +7,5 @@
     - common
     - hostnamectl
     - avahi
+    - openssl
     - reboot

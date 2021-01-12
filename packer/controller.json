@@ -1,9 +1,9 @@
 {
     "description": "XHPL CI/CD cluster POC",
     "variables": {
-        "checksum": "sha1:ab6f6bab124cd749a69ae63dc3b5fbfa4d0e52b5",
-        "distro": "centos-7.8-x86_64",
-        "iso": "/Users/rcon/Desktop/tmp/CentOS-7-x86_64-DVD-2003.iso",
+        "checksum": "sha256:e33d7b1ea7a9e2f38c8f693215dd85254c3a4fe446f93f563279715b68d07987",
+        "distro": "centos-7.9-x86_64",
+        "iso": "/Users/rcon/Desktop/tmp/CentOS-7-x86_64-DVD-2009.iso",
         "ssh_user": "packer",
         "ssh_pass": "packer",
         "vm-cpus": "2",
@@ -36,7 +36,10 @@
             "ssh_timeout": "15m",
             "ssh_username": "{{ user `ssh_user` }}",
             "type": "vmware-iso",
-            "vm_name": "{{ user `distro` }}-{{ user `vm-server_name` }}"
+            "vm_name": "{{ user `distro` }}-{{ user `vm-server_name` }}",
+            "vmx_data_post": {
+                "ethernet0.connectionType": "bridged"
+            }
     }],
     "provisioners": [
         {

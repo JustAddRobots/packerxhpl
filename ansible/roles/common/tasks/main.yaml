@@ -19,8 +19,15 @@
     state: stopped
     enabled: false
 
-#- name: Upgrade yum
-#  yum:
+- name: Install dnf
+  yum:
+      name:
+		- dnf
+  vars:
+    ansible_python_interpreter: /usr/bin/python
+
+#- name: Upgrade dnf
+#  dnf:
 #    name: "*"
 #    state: latest
 
