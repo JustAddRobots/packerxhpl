@@ -1,0 +1,9 @@
+---
+dependencies:
+  - openssl
+
+- name: Start Nginx
+  systemd:
+    name: nginx
+    state: started
+    enabled: yes

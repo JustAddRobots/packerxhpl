@@ -1,0 +1,32 @@
+---
+- name: Add nodes to /etc/hosts
+  lineinfile:
+      dest: /etc/hosts
+      line: "{{ hostvars[item].ansible_default_ipv4.address }} {{ item }}"
+      regexp: ".*{{ item }}$"
+      state: present
+  when: hostvars[item].ansible_default_ipv4.address is defined
+  with_items: "{{ groups.all }}"
+
+- name: Add kubernetes repo
+  yum_repository:
+    baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+    description: Kubernetes repo
+    file: kubernetes
+    gpgcheck: true
+    gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+    name: kubernetes
+
+- name: Install kubernetes
+  yum:
+    name:
+        - kubelet
+        - kubeadm
+        - kubectl
+    state: present
+
+- name: Start kubectl
+  systemd:
+    enabled: yes    
+    name: kubelet
+    state: started

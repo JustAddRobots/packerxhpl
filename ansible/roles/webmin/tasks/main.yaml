@@ -1,0 +1,21 @@
+---
+- name: Add webmin repo
+  yum_repository:
+    description: webmin repo
+    file: webmin
+    gpgcheck: yes
+    gpgkey: http://www.webmin.com/jcameron-key.asc
+    mirrorlist: http://download.webmin.com/download/yum/mirrorlist
+    name: webmin
+
+- name: Install webmin
+  yum:
+      name:
+        - webmin
+      state: present
+
+- name: Start webmin
+  systemd:
+    enabled: true
+    name: webmin
+    state: started
