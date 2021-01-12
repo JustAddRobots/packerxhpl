@@ -1,0 +1,12 @@
+---
+- name: Install packer/terraform public key
+  ansible.posix.authorized_key:
+      user: packer
+      state: present
+      key: "{{ lookup('file', 'files/id_rsa-packer.pub') }}"
+
+- name: Install rcon public key
+  ansible.posix.authorized_key:
+      user: rcon
+      state: present
+      key: "{{ lookup('file', 'files/id_rsa-rcon.pub') }}"

@@ -1,0 +1,13 @@
+---
+dependencies:
+  - node
+
+- name: Install smee
+  community.general.npm:
+      global: true
+      name: smee-client
+
+- name: Create Smee systemd service
+  template:
+      dest: /etc/systemd/system/smee.service
+      src: templates/smee.service.j2

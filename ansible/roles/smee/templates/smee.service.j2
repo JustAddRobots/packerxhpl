@@ -1,0 +1,12 @@
+[Unit]
+Description=Smee Server
+Documentation={{ smee_url }}
+After=jenkins-docker.service
+Requires=jenkins-docker.service
+
+[Service]
+Type=simple
+ExecStart={{ smee_bin }} -u {{ smee_url }} --target {{ jenkins_webhook }}
+
+[Install]
+WantedBy=multi-user.target

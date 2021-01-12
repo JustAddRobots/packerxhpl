@@ -1,0 +1,11 @@
+---
+- hosts: controller
+  become: true
+  roles:
+    - useradd
+    - publickey
+    - common
+    - hostnamectl
+    - avahi
+    - openssl
+    - reboot

@@ -1,0 +1,35 @@
+---
+- name: Disable SELinux
+  ansible.posix.selinux:
+    state: disabled
+
+- name: Disable swap
+  shell: |
+    swapoff -a
+
+- name: Disable swap in fstab
+  replace:
+    path: /etc/fstab
+    regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
+    replace: '# \1'
+
+- name: Stop firewalld
+  systemd:
+    name: firewalld
+    state: stopped
+    enabled: false
+
+- name: Install dnf
+  yum:
+      name:
+		- dnf
+  vars:
+    ansible_python_interpreter: /usr/bin/python
+
+#- name: Upgrade dnf
+#  dnf:
+#    name: "*"
+#    state: latest
+
+- name: Rebuild initramfs
+  shell: dracut -f -v

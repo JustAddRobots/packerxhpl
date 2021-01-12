@@ -1,0 +1,55 @@
+{
+    "description": "XHPL CI/CD cluster POC",
+    "variables": {
+        "checksum": "sha256:e33d7b1ea7a9e2f38c8f693215dd85254c3a4fe446f93f563279715b68d07987",
+        "distro": "centos-7.9-x86_64",
+        "iso": "/Users/rcon/Desktop/tmp/CentOS-7-x86_64-DVD-2009.iso",
+        "ssh_user": "packer",
+        "ssh_pass": "packer",
+        "vm-cpus": "2",
+        "vm-disk_size": "16384",
+        "vm-mem": "16384",
+        "vm-server_name": "controller"
+    },
+    "builders": [
+        {
+            "boot_command": [
+                "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks-controller.cfg<enter><wait>"
+            ],
+            "cpus": "{{ user `vm-cpus` }}",
+            "disk_size": "{{ user `vm-disk_size` }}",
+            "guest_os_type": "centos7_64Guest",
+            "headless": false,
+            "http_directory": "http",
+            "iso_checksum": "{{ user `checksum` }}",
+            "iso_urls": [
+                "{{ user `iso` }}"
+            ],
+            "memory": "{{ user `vm-mem` }}",
+            "name": "{{ user `vm-server_name` }}",
+            "network": "nat",
+            "output_directory": "/tmp/packer",
+            "remote_password": "{{ user `ssh_pass` }}",
+            "remote_username": "{{ user `ssh_user` }}",
+            "ssh_password": "{{ user `ssh_pass` }}",
+            "ssh_port": 22,
+            "ssh_timeout": "15m",
+            "ssh_username": "{{ user `ssh_user` }}",
+            "type": "vmware-iso",
+            "vm_name": "{{ user `distro` }}-{{ user `vm-server_name` }}",
+            "vmx_data_post": {
+                "ethernet0.connectionType": "bridged"
+            }
+    }],
+    "provisioners": [
+        {
+            "type": "ansible",
+            "extra_arguments": [
+                "--extra-vars",
+                "ansible_become_pass={{ user `ssh_pass` }}"
+            ],
+            "host_alias": "controller",
+            "playbook_file": "ansible/test.yaml"
+        }
+    ]
+}

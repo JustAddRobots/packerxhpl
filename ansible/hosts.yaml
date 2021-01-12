@@ -1,0 +1,9 @@
+---
+controllers:
+    hosts:
+        controller:
+
+workers:
+    hosts:
+        worker0:
+        worker1:
