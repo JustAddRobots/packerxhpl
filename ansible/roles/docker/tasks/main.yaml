@@ -17,3 +17,14 @@
       enabled: yes
       name: docker
       state: started
+
+- name: Start docker registry
+  docker_container:
+      cert_path: "{{ ssl_crt_file }}"
+      image: registry:2
+      key_path: "{{ ssl_private_key_file }}"
+      name: registry
+      published_port:
+      restart_policy: always
+      state: started
+        - "{{ registry_port }}":5000
