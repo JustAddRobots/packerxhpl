@@ -3,6 +3,8 @@
   dnf:
     name:
       - nginx
+  vars:
+    ansible_python_interpreter: /usr/bin/python
 
 - name: Template nginx.conf
   ansible.builtin.template:

@@ -23,6 +23,7 @@
   yum:
     name:
       - dnf
+      - python-dnf
   vars:
     ansible_python_interpreter: /usr/bin/python
 
