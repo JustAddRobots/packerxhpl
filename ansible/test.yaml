@@ -8,5 +8,4 @@
     - hostnamectl
     - avahi
     - nginx
-    - docker
     - reboot
