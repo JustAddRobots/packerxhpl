@@ -34,3 +34,4 @@
       published_ports: "{{ registry_port }}:5000"
       restart_policy: always
       state: started
+      volumes: /etc/pki/tls/certs:/etc/pki/tls/certs

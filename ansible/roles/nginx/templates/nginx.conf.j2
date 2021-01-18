@@ -50,8 +50,8 @@ http {
        server_name  _;
        root         /usr/share/nginx/html;
 
-       ssl_certificate "{{ ssl_crt_file }}";
-       ssl_certificate_key "{{ ssl_private_key_file }}";
+       ssl_certificate "{{ tls_crt_file }}";
+       ssl_certificate_key "{{ tls_private_key_file }}";
        ssl_session_cache shared:SSL:30m;
        ssl_session_timeout  1d;
        ssl_ciphers HIGH:!aNULL:!MD5;

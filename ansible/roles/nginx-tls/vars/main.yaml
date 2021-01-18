@@ -1,0 +1,7 @@
+---
+ansible_python_interpreter: /usr/bin/python3
+tls_dir: /etc/pki/tls
+tls_file_prefix: ansible-selfsigned-nginx
+tls_private_key_file: "{{ tls_dir }}/private/{{ tls_file_prefix }}.key"
+tls_csr_file: "{{ tls_dir }}/csr/{{ tls_file_prefix }}.csr"
+tls_crt_file: "{{ tls_dir }}/certs/{{ tls_file_prefix }}.crt"

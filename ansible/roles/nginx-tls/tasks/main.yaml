@@ -1,0 +1,35 @@
+---
+- name: Upgrade pip
+  shell: python3 -m pip install --upgrade pip
+
+- name: Verify python OpenSSL existence
+  pip:
+    executable: pip3
+    name: 
+      - PyOpenSSL
+
+- name: Verify TLS dir existence
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ tls_dir }}/certs"
+    - "{{ tls_dir }}/csr"
+    - "{{ tls_dir }}/private"
+
+- name: Generate TLS private key
+  openssl_privatekey:
+    path: "{{ tls_private_key_file }}"
+
+- name: Generate TLS CSR
+  openssl_csr:
+    common_name: "{{ inventory_hostname }}.local"
+    path: "{{ tls_csr_file }}"
+    privatekey_path: "{{ tls_private_key_file }}"
+
+- name: Generate self-signed TLS cert
+  openssl_certificate:
+    csr_path: "{{ tls_csr_file }}"
+    path: "{{ tls_crt_file }}"
+    privatekey_path: "{{ tls_private_key_file }}"
+    provider: selfsigned

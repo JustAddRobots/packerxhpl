@@ -7,16 +7,119 @@
     gpgcheck: yes
     gpgkey: https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
     name: mariadb
+
 - name: Install mariadb
-  yum:
-      disablerepo: *
+  dnf:
       enablerepo: mariadb
       name:
         - MariaDB-server
         - MariaDB-client
+        - MySQL-python
+        - python36-PyMySQL
       state: present
+  vars:
+    ansible_python_interpreter: /usr/bin/python
+
 - name: Start mariadb
   systemd:
-    enabled: yes
+    enabled: true
     name: mariadb
     state: started
+
+- name: Set mariadb root password
+  mysql_user:
+    login_unix_socket: "/var/lib/mysql/mysql.sock"
+    name: root
+    password: "{{ mysql_root_password }}"
+    state: present
+
+- name: Template /root/.my.cnf for root password
+  template:
+      backup: true
+      dest: /root/.my.cnf
+      owner: root
+      mode: 0600
+      src: templates/my.cnf.j2
+
+- name: Create mariadb user
+  mysql_user:
+    encrypted: false
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    name: "{{ mysql_user }}"
+    password: "{{ mysql_user_password }}"
+    priv: "*.*:ALL"
+    state: present
+
+- name: Remove anonymous user for localhost
+  mysql_user:
+    encrypted: false
+    login_user: "{{ mysql_user }}"
+    login_password: "{{ mysql_user_password }}"
+    user: ""
+    state: absent
+
+- name: Remove anonymous user for FQDN
+  mysql_user:
+    encrypted: false
+    host: "{{ inventory_hostname }}.local"
+    login_user: "{{ mysql_user }}"
+    login_password: "{{ mysql_user_password }}"
+    state: absent
+    user: ""
+
+- name: Secure root login for IPv4 localhost
+  mysql_user:
+    encrypted: false
+    host: "127.0.0.1"
+    login_user: "{{ mysql_user }}"
+    login_password: "{{ mysql_user_password }}"
+    password: "{{ mysql_root_password }}"
+    user: root
+
+- name: Secure root login for IPv6 localhost
+  mysql_user:
+    encrypted: false
+    host: "::1"
+    login_user: "{{ mysql_user }}"
+    login_password: "{{ mysql_user_password }}"
+    password: "{{ mysql_root_password }}"
+    user: root
+
+- name: Secure root login for localhost
+  mysql_user:
+    encrypted: false
+    host: localhost
+    login_user: "{{ mysql_user }}"
+    login_password: "{{ mysql_user_password }}"
+    password: "{{ mysql_root_password }}"
+    user: root
+
+- name: Secure root login for FQDN
+  mysql_user:
+    encrypted: false
+    host: "{{ inventory_hostname }}.local"
+    login_user: "{{ mysql_user }}"
+    login_password: "{{ mysql_user_password }}"
+    password: "{{ mysql_root_password }}"
+    user: root
+
+- name: Remove test database
+  mysql_db:
+    db: test
+    login_user: "{{ mysql_user }}"
+    login_password: "{{ mysql_user_password }}"
+    state: absent
+
+- name: Copy xhplconsole schema
+  copy:
+    src: "{{ xhplconsole_schema_file }}"
+    dest: "/tmp/xhplconsole-{{ inventory_hostname }}.sql"
+
+- name: Restore xhplconsole schema
+  mysql_db:
+    login_user: "{{ mysql_user }}"
+    login_password: "{{ mysql_user_password }}"
+    name: xhplconsole
+    state: import
+    target: "/tmp/xhplconsole-{{ inventory_hostname }}.sql"
