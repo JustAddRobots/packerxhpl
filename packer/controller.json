@@ -49,7 +49,7 @@
                 "ansible_become_pass={{ user `ssh_pass` }}"
             ],
             "host_alias": "controller",
-            "playbook_file": "ansible/test.yaml"
+            "playbook_file": "./ansible/test.yaml"
         }
     ]
 }
