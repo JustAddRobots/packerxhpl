@@ -9,4 +9,5 @@
     - avahi
     - nginx
     - mariadb
+    - webmin
     - reboot
