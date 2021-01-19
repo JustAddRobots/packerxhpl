@@ -1,0 +1,3 @@
+---
+miniserv_users_file: /etc/webmin/miniserv.users
+sudo_user: rcon
