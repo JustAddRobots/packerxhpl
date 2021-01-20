@@ -1,9 +1,9 @@
 ---
 controllers:
     hosts:
-        controller:
+        controller.local:
 
 workers:
     hosts:
-        worker0:
-        worker1:
+        worker0.local:
+        worker1.local:

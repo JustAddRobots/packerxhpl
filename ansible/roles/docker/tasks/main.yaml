@@ -5,15 +5,38 @@
       url: https://download.docker.com/linux/centos/docker-ce.repo
 
 - name: Install docker-ce
-  yum:
+  dnf:
       name:
           - docker-ce
           - docker-ce-cli
           - containerd.io
       state: present
+  vars:
+      ansible_python_interpreter: /usr/bin/python
+
+- name: Install docker-py SDK
+  pip:
+    name:
+      - docker-py
 
 - name: Start docker
   systemd:
       enabled: yes
       name: docker
       state: started
+
+- name: Start docker registry
+  docker_container:
+      env:
+        DOCKER_HOST: "tcp://{{ ansible_hostname }}.local:{{ registry_port }}"
+        DOCKER_TLS_VERIFY: "1"
+        REGISTRY_HTTP_TLS_CERTIFICATE: "{{ tls_crt_file }}"
+        REGISTRY_HTTP_TLS_KEY: "{{ tls_private_key_file }}"
+      image: registry:2
+      name: registry
+      published_ports: "{{ registry_port }}:5000"
+      restart_policy: always
+      state: started
+      volumes: /etc/pki/tls:/etc/pki/tls
+  vars:
+    registry_port: 2376
