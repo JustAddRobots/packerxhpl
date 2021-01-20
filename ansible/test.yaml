@@ -10,4 +10,5 @@
     - nginx
     - mariadb
     - webmin
+    - docker
     - reboot

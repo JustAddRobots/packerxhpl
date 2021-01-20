@@ -27,11 +27,16 @@
 
 - name: Start docker registry
   docker_container:
-      cert_path: "{{ ssl_crt_file }}"
+      env:
+        DOCKER_HOST: "tcp://{{ ansible_hostname }}.local:{{ registry_port }}"
+        DOCKER_TLS_VERIFY: "1"
+        REGISTRY_HTTP_TLS_CERTIFICATE: "{{ tls_crt_file }}"
+        REGISTRY_HTTP_TLS_KEY: "{{ tls_private_key_file }}"
       image: registry:2
-      key_path: "{{ ssl_private_key_file }}"
       name: registry
       published_ports: "{{ registry_port }}:5000"
       restart_policy: always
       state: started
-      volumes: /etc/pki/tls/certs:/etc/pki/tls/certs
+      volumes: /etc/pki/tls:/etc/pki/tls
+  vars:
+    registry_port: 2376
