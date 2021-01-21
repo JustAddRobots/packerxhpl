@@ -16,6 +16,40 @@ TAG_MSG=""
 PLATFORM=$(uname -s)
 
 usage() {
+
+# MacOS getopt does not support long options, so it gets a different
+# usage message. Not worth the time to make this modular, so just copypaste.
+if [[ $PLATFORM == "Darwin" ]]; then
+cat << EOF
+USAGE:
+    $0  [ -h ]
+    $0  [ -v ] [ -r ] ( -p part )
+
+This script bumps the semantic version and automatically creates 
+a changelog for releases. It requires bump2version, gitchangelog, 
+pystache, and git. It must be run from 'stage' branch.
+
+ARGS:
+    -p  part of the version to increase. Version scheme:
+        {major}.{minor}.{patch}-{release}.{build}
+
+OPTIONS:
+    -h  Prints this usage information and exits
+    -v  Prints verbose messages
+    -r  Remove existing lockfiles from previous runs
+
+EX:
+    Starting from a current version of 1.0.0:
+
+    Task                        Command                 Version number
+    ----                        -------                 --------------
+    Start release candidate     $ bumpme -p patch       1.0.1-rc.0
+    Added fixes, update RC      $ bumpme -p build       1.0.1-rc.1
+    Add More fixes              $ bumpme -p build       1.0.1-rc.2
+    Release                     $ bumpme -p release     1.0.1
+
+EOF
+else
 cat << EOF
 USAGE:
     $0  [ -h | --help ]
@@ -45,6 +79,7 @@ EX:
     Release                     $ bumpme -p release     1.0.1
 
 EOF
+fi
 }
 
 # Set CLI parameters
@@ -88,8 +123,6 @@ while true; do
         ;;
     esac
 done
-
-# echo -e "PLATFORM: $PLATFORM\n0: $0\n1: $1\n2: $2\nARGS: $ARGS\nPART: $PART"
 
 if [[ $PART == "" ]]; then usage; exit; fi
 

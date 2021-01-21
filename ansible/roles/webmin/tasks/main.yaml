@@ -9,13 +9,35 @@
     name: webmin
 
 - name: Install webmin
-  yum:
-      name:
-        - webmin
-      state: present
+  dnf:
+    name:
+      - webmin
+    state: present
+  vars:
+    ansible_python_interpreter: /usr/bin/python
+
+- name: Register sudo user password extraction command
+  register: cmd_result
+  shell: "grep '{{ sudo_user }}' /etc/shadow | awk -F: '{ print $2 }'"
+
+- set_fact:
+    sudo_user_hashed_password: "{{ cmd_result.stdout }}"
+
+- name: Add sudo user to webmin users
+  template:
+    backup: true
+    dest: "{{ miniserv_users_file }}"
+    src: templates/miniserv.users.j2
+
+- name: Add sudo user to ACL
+  lineinfile:
+    backup: true
+    insertafter: EOF
+    line: "{{ sudo_user }}:*"
+    path: /etc/webmin/webmin.acl
 
 - name: Start webmin
-  systemd:
+  sysvinit:
     enabled: true
     name: webmin
     state: started

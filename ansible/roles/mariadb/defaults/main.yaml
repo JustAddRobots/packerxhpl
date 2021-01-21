@@ -1,0 +1,9 @@
+---
+# To create MariaDB hashed password:
+# python -c 'from hashlib import sha1; print "*" + sha1(sha1("PASSWORD").digest()).hexdigest().upper()'
+
+mysql_root_password: "vonTrapp"
+mysql_user: "rcon"
+mysql_user_password: "Sharapova"
+mysql_user_config_file: "/root/.my.cnf"
+xhplconsole_schema_file: "files/xhplconsole-schema.sql"

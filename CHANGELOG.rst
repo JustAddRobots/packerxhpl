@@ -1,6 +1,20 @@
 Changelog
 =========
 
+0.3.0 (2021-01-21)
+------------------
+- ISSUE-010: Added postman role. (1bfe3f3) [JustAddRobots]
+- ISSUE-003: Added docker TLS. (69559bc) [JustAddRobots]
+- ISSUE-003: Added webmin to playbook. (e0e4c61) [JustAddRobots]
+- ISSUE-003: Added webmin role. (569b1d8) [JustAddRobots]
+- ISSUE-003: Fixed playbook path. (42333cc) [JustAddRobots]
+- ISSUE-003: Added complete mariadb role, renamed SSL to TLS. (45192d2) [JustAddRobots]
+- ISSUE-003: Added nginx TLS hostname update. (9cb7d39) [JustAddRobots]
+- ISSUE-003: Fixed nginx role with python_interpreter. (d8df935) [JustAddRobots]
+- ISSUE-003: Added docker role. (ed52c1f) [JustAddRobots]
+- ISSUE-003: Added nginx install and config with TLS. (3021e90) [JustAddRobots]
+- ISSUE-007: Updated usage() for MacOS getopt. (9ccd1d3) [JustAddRobots]
+
 0.2.1 (2021-01-12)
 ------------------
 - Stage: Added pystache check. (3dfb4b4) [JustAddRobots]

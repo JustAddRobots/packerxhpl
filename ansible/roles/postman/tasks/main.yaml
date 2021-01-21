@@ -1,0 +1,27 @@
+---
+- name: Install snapd
+  dnf:
+    name:
+      - snapd
+  vars:
+    ansible_python_interpreter: /usr/bin/python
+
+- name: Start snapd socket
+  systemd:
+    enabled: true
+    name: snapd.socket
+    state: started
+
+- name: Create snap symlink
+  file:
+    dest: /snap
+    src: /var/lib/snapd/snap
+    state: link
+
+- name: Re-install snapd
+  command: dnf -y -q reinstall snapd
+
+- name: Install postman
+  snap:
+    name: 
+      - postman
