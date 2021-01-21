@@ -8,8 +8,9 @@
     - hostnamectl
     - avahi
     - nginx
+    - docker
+    - kubernetes
     - mariadb
     - webmin
-    - docker
     - postman
     - reboot
