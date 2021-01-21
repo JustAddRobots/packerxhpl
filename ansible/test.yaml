@@ -11,4 +11,5 @@
     - mariadb
     - webmin
     - docker
+    - postman
     - reboot
