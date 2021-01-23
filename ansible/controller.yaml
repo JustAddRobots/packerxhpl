@@ -1,0 +1,16 @@
+---
+- hosts: controller
+  become: true
+  roles:
+    - useradd
+    - publickey
+    - common
+    - hostnamectl
+    - avahi
+    - nginx
+    - docker
+    - kubemaster
+    - mariadb
+    - webmin
+    - postman
+    - reboot

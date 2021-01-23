@@ -9,12 +9,12 @@
         "vm-cpus": "2",
         "vm-disk_size": "8192",
         "vm-mem": "8192",
-        "vm-server_name": "controller"
+        "vm-server_name": "worker"
     },
     "builders": [
         {
             "boot_command": [
-                "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks-controller.cfg<enter><wait>"
+                "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks-{{ user `vm-server_name` }}.cfg<enter><wait>"
             ],
             "cpus": "{{ user `vm-cpus` }}",
             "disk_size": "{{ user `vm-disk_size` }}",
@@ -48,7 +48,7 @@
                 "--extra-vars",
                 "ansible_become_pass={{ user `ssh_pass` }}"
             ],
-            "host_alias": "{{ user `vm-server_name` }}",
+            "host_alias": "{{ user `vm-server_name`}}",
             "playbook_file": "./ansible/{{ user `vm-server_name` }}.yaml"
         }
     ]

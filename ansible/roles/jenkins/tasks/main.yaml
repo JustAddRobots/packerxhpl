@@ -9,12 +9,13 @@
     name: jenkins
 
 - name: Install jenkins
-  yum:
+  dnf:
       name:
         - gcc-c++
         - jenkins
         - make
       state: present
+  ansible_python_interpreter: /usr/bin/python
 
 - name: Start jenkins
   systemd:
