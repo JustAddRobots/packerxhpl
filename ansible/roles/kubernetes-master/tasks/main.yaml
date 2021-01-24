@@ -1,4 +1,12 @@
 ---
+# - name: Add hostname to /etc/hosts
+#   lineinfile:
+#     backup: true
+#     create: true
+#     insertafter: EOF
+#     line: "{{ ansible_default_ipv4.address }} {{ inventory_hostname }}.local"
+#     path: /etc/hosts
+
 - name: Initialise kubernetes cluster
   # command: "kubeadm init --apiserver-advertise-address={{ api_addr }} --pod-network-cidr={{ pod_cidr }}"
   command: kubeadm init
@@ -27,11 +35,22 @@
   environment:
     KUBECONFIG: "{{ kubeconfig }}"
 
+# - name: Enable kubelet
+#   systemd:
+#     enabled: true
+#     name: kubelet
+
 - name: Generate join command
   command: kubeadm token create --print-join-command
   register: join_command
 
-- delegate_to: localhost
-  copy: 
+# - name: Copy join command to local file
+#   become: false
+#   local_action: copy content="{{ join_command.stdout_lines[0] }}" dest="/tmp/join_command"
+
+- name: Copy join command to local file
+  become: false
+  copy:
     content: "{{ join_command.stdout_lines[0] }}"
-    dest: /tmp/join_command
+    dest: "/tmp/{{ inventory_hostname }}.local-join_command"
+  delegate_to: localhost
