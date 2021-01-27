@@ -3,7 +3,8 @@ variable "diskstore" {
 }
 
 variable "esxi_hostname" {
-    default = "11.22.33.99"
+    default = "11.22.33.222"
+    # 00:0C:29:5E:0D:BD
 }
 
 variable "esxi_hostport" {

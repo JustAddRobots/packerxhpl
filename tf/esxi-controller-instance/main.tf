@@ -15,14 +15,16 @@ provider "esxi" {
     esxi_hostname = var.esxi_hostname
     esxi_hostport = var.esxi_hostport
     esxi_hostssl = var.esxi_hostssl
-    esxi_password = var.esxi_pw
-    esxi_username = var.esxi_user
+    esxi_password = var.esxi_password
+    esxi_username = var.esxi_username
 }
 
 resource "esxi_guest" "controller0" {
     disk_store = var.diskstore
+    guestos = var.guestos
     guest_name = var.vmname
     ovf_source = var.vmxsource
+    power = on
     memsize = var.memsize
     numvcpus = var.numvcpus
     
@@ -31,3 +33,23 @@ resource "esxi_guest" "controller0" {
         mac_address = var.macaddr
     }
 }
+
+/*
+module "worker" {
+    macaddr = "52:54:00:9a:a3:df"
+    name = "worker0"
+    source = "modules/worker"
+}
+
+module "worker" {
+    macaddr = "52:54:00:98:21:be"
+    name = "worker1"
+    source = "modules/worker"
+}
+
+module "controller" {
+    macaddr = "52:54:00:f1:f1:6e"
+    name = "controller0"
+    source = "modules/controller"
+}
+*/
