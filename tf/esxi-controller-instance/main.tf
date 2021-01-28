@@ -19,37 +19,23 @@ provider "esxi" {
     esxi_username = var.esxi_username
 }
 
-resource "esxi_guest" "controller0" {
-    disk_store = var.diskstore
-    guestos = var.guestos
-    guest_name = var.vmname
-    ovf_source = var.vmxsource
-    power = on
-    memsize = var.memsize
-    numvcpus = var.numvcpus
-    
-    network_interfaces {
-        virtual_network = var.vmnetwork
-        mac_address = var.macaddr
+variable "workers" {
+    description = "Map of workers with MACs"
+    type = map
+    default = {
+        worker0 = {
+            macaddr = "52:54:00:9a:a3:df"
+        },
+        worker1 = {
+            macaddr = "52:54:00:98:21:be"
+        }
     }
 }
 
-/*
 module "worker" {
-    macaddr = "52:54:00:9a:a3:df"
-    name = "worker0"
-    source = "modules/worker"
+    source = "./modules/worker"
+    for_each = var.workers
+    name = each.key
+    macaddr = each.value.macaddr
 }
 
-module "worker" {
-    macaddr = "52:54:00:98:21:be"
-    name = "worker1"
-    source = "modules/worker"
-}
-
-module "controller" {
-    macaddr = "52:54:00:f1:f1:6e"
-    name = "controller0"
-    source = "modules/controller"
-}
-*/
