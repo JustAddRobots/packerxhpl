@@ -23,6 +23,6 @@ variable "vmnetwork" {
 }
 
 variable "vmxsource" {
-    default = "/tmp/packer/worker/centos-7.9-x86_64-worker.vmx"
+    default = "/usr/local/etc/packer/worker/centos-7.9-x86_64-worker.vmx"
 }
 

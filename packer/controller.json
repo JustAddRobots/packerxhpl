@@ -14,7 +14,7 @@
     "builders": [
         {
             "boot_command": [
-                "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks-controller.cfg<enter><wait>"
+                "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks-{{ user `vm-server_name` }}.cfg<enter><wait>"
             ],
             "cpus": "{{ user `vm-cpus` }}",
             "disk_size": "{{ user `vm-disk_size` }}",
@@ -28,7 +28,7 @@
             "memory": "{{ user `vm-mem` }}",
             "name": "{{ user `vm-server_name` }}",
             "network": "nat",
-            "output_directory": "/tmp/packer/{{ user `vm-server_name` }}",
+            "output_directory": "/usr/local/etc/packer/{{ user `vm-server_name` }}",
             "remote_password": "{{ user `ssh_pass` }}",
             "remote_username": "{{ user `ssh_user` }}",
             "ssh_password": "{{ user `ssh_pass` }}",
