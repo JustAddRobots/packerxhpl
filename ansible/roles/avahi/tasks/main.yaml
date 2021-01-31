@@ -16,5 +16,5 @@
 - name: Start avahi-daemon
   systemd:
     name: avahi-daemon
-    state: started
+    state: restarted
     enabled: true

@@ -9,7 +9,7 @@
         "vm-cpus": "2",
         "vm-disk_size": "8192",
         "vm-mem": "8192",
-        "vm-server_name": "controller"
+        "vm-server_name": "worker"
     },
     "builders": [
         {
@@ -35,7 +35,6 @@
             "ssh_port": 22,
             "ssh_timeout": "15m",
             "ssh_username": "{{ user `ssh_user` }}",
-            "tools_upload_flavor": "linux",
             "type": "vmware-iso",
             "vm_name": "{{ user `distro` }}-{{ user `vm-server_name` }}",
             "vmx_data_post": {
@@ -49,7 +48,7 @@
                 "--extra-vars",
                 "ansible_become_pass={{ user `ssh_pass` }}"
             ],
-            "host_alias": "{{ user `vm-server_name` }}",
+            "host_alias": "{{ user `vm-server_name`}}",
             "playbook_file": "./ansible/{{ user `vm-server_name` }}.yaml"
         }
     ]

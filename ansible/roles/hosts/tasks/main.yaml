@@ -1,0 +1,18 @@
+# ---
+# - name: Add hostname to /etc/hosts
+#   lineinfile:
+#     backup: true
+#     create: true
+#     insertafter: EOF
+#     line: "{{ ansible_default_ipv4.address }} {{ inventory_hostname }}.local"
+#     path: /etc/hosts
+
+---
+- name: Add IP address of all hosts to all /etc/hosts
+  lineinfile:
+    dest: /etc/hosts
+    line: "{{ hostvars[item].ansible_host }} {{item}}"
+    regexp: '.*{{ item }}$'
+    state: present
+  when: hostvars[item].ansible_host is defined
+  with_items: "{{ groups.all }}"

@@ -1,0 +1,4 @@
+---
+k8s_master: "{{ groups['controllers'][0] }}"
+join_command_src: "/tmp/{{ k8s_master }}.local-join_command"
+join_command_dest: "/tmp/join-command.sh"

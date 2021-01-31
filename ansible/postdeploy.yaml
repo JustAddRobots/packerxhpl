@@ -1,0 +1,17 @@
+---
+- hosts: all
+  become: true
+  roles:
+    - hostnamectl
+    - avahi
+    - hosts
+
+- hosts: controllers
+  become: true
+  roles:
+    - kubernetes-master
+
+- hosts: workers
+  become: true
+  roles:
+    - kubernetes-worker

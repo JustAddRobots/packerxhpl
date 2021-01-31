@@ -4,6 +4,9 @@
 *.retry
 *.sw*
 *.svn
+*.tfvars
+*.terraform
+*.terraform.*
 venv
 packer_cache
 ansible/local.yaml

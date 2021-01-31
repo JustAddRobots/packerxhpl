@@ -1,0 +1,5 @@
+---
+- name: Create Smee systemd service
+  template:
+      dest: /etc/systemd/system/smee.service
+      src: templates/smee.service.j2

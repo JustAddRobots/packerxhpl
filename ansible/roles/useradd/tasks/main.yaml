@@ -3,5 +3,5 @@
   user:
     generate_ssh_key: yes
     groups: wheel
-    name: rcon
+    name: "{{ sudo_user }}"
     password: $6$I/pkkzR8RcJjgdxJ$AskdsANFCz9pu5MmPsPihCTyAyWTEgh6w4WkZJhgsKftxiSDyg93pvTW4VlldHQt.eRpZ0q66rJHD6To4qece0
