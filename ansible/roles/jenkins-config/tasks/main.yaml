@@ -1,6 +1,30 @@
 ---
+- name: Set jenkins port
+  lineinfile:
+    line: "JENKINS_PORT='{{ jenkins_port }}'"
+    path: "{{ jenkins_config_file }}"
+    regex: JENKINS_PORT="8080"
+
+- name: Disable jenkins setup wizard
+  lineinfile:
+    insertafter: "^JENKINS_JAVA_OPTIONS=.*$"
+    line: " -Djenkins.install.runSetupWizard=false"
+    path: "{{ jenkins_config_file }}"
+
+- name: Create jenkins hook directory
+  file:
+    path: "{{ jenkins_init_hook_dir }}"
+    state: directory
+
+- name: Add admin user creation init script
+  template:
+    backup: true
+    dest: "{{ jenkins_init_hook_file }}"
+    src: templates/init.groovy.j2
+
 - name: Start jenkins
   systemd:
+    enabled: true
     name: jenkins
     state: started
-    enabled: true
+

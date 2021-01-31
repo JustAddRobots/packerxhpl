@@ -62,6 +62,7 @@
 - name: Remove anonymous user for FQDN
   mysql_user:
     encrypted: false
+    #host: "{{ ansible_hostname }}"
     host: "{{ inventory_hostname }}.local"
     login_user: "{{ mysql_user }}"
     login_password: "{{ mysql_user_password }}"
@@ -98,7 +99,8 @@
 - name: Secure root login for FQDN
   mysql_user:
     encrypted: false
-    host: "{{ inventory_hostname }}.local"
+    host: "{{ ansible_hostname }}.local"
+    #host: "{{ inventory_hostname }}.local"
     login_user: "{{ mysql_user }}"
     login_password: "{{ mysql_user_password }}"
     password: "{{ mysql_root_password }}"

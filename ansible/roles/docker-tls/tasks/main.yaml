@@ -23,7 +23,8 @@
 
 - name: Generate TLS CSR
   openssl_csr:
-    common_name: "{{ inventory_hostname }}.local"
+    common_name: "{{ ansible_hostname }}"
+    #common_name: "{{ inventory_hostname }}.local"
     path: "{{ tls_csr_file }}"
     privatekey_path: "{{ tls_private_key_file }}"
 

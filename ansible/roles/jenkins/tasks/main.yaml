@@ -22,6 +22,7 @@
   dnf:
       name:
         - gcc-c++
+        - java-1.8.0-openjdk-devel
         - jenkins
         - make
       state: present

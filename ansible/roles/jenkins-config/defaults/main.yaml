@@ -1,2 +1,7 @@
 ---
+jenkins_config_file: "/etc/sysconfig/jenkins"
+jenkins_init_hook_dir: "/var/lib/jenkins/init.groovy.d"
+jenkins_init_hook_file: "{{ jenkins_init_hook_dir }}/init.groovy"
+jenkins_admin_password: "password"
+jenkins_admin_username: "rcon"
 jenkins_port: 9191

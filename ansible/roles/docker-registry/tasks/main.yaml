@@ -3,7 +3,8 @@
   docker_container:
       container_default_behavior: compatibility
       env:
-        DOCKER_HOST: "tcp://{{ ansible_hostname }}.local:{{ registry_port }}"
+        #DOCKER_HOST: "tcp://{{ ansible_hostname }}.local:{{ registry_port }}"
+        DOCKER_HOST: "tcp://{{ ansible_hostname }}:{{ registry_port }}"
         DOCKER_TLS_VERIFY: "1"
         REGISTRY_HTTP_TLS_CERTIFICATE: "{{ tls_crt_file }}"
         REGISTRY_HTTP_TLS_KEY: "{{ tls_private_key_file }}"

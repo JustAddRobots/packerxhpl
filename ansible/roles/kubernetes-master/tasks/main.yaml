@@ -40,5 +40,5 @@
   become: false
   copy:
     content: "{{ join_command.stdout_lines[0] }}"
-    dest: "/tmp/{{ inventory_hostname }}.local-join_command"
+    dest: "{{ join_command_file }}"
   delegate_to: localhost

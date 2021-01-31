@@ -1,3 +1,4 @@
 ---
+join_command_file: "/tmp/{{ inventory_hostname }}.join_command"
 kubeconfig_dir: "/home/{{ sudo_user }}/.kube"
 kubeconfig: "{{ kubeconfig_dir }}/config"
