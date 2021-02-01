@@ -1,23 +1,29 @@
 ---
+# - name: Add jenkins repo
+#   yum_repository:
+#     baseurl: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+#     description: Jenkins repo
+#     file: jenkins
+#     gpgcheck: true
+#     gpgkey: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+#     name: jenkins
+
 - name: Add jenkins repo
-  yum_repository:
-    baseurl: https://pkg.jenkins.io/redhat-stable/jenkins.repo
-    description: Jenkins repo
-    file: jenkins
-    gpgcheck: true
-    gpgkey: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
-    name: jenkins
+  shell: yum-config-manager --add-repo=https://pkg.jenkins.io/redhat-stable/jenkins.repo
+  args:
+    creates: /etc/yum.repos.d/jenkins.repo
+
+- name: Add jenkins repo GPG key
+  rpm_key:
+    key: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+    state: present
 
 - name: Install jenkins
-  yum:
+  dnf:
       name:
         - gcc-c++
         - jenkins
         - make
       state: present
-
-- name: Start jenkins
-  systemd:
-    name: jenkins
-    state: started
-    enabled: true
+  vars:
+    ansible_python_interpreter: /usr/bin/python

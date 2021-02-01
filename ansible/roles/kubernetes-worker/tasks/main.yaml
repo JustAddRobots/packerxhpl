@@ -1,0 +1,9 @@
+---
+- name: Copy the join command to worker
+  copy:
+    dest: "{{ join_command_dest }}"
+    mode: 0777
+    src: "{{ join_command_src }}"
+
+- name: Join worker to the Kubernetes Cluster
+  command: sh "{{ join_command_dest }}"

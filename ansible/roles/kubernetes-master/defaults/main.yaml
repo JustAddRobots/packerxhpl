@@ -1,0 +1,3 @@
+---
+kubeconfig_dir: "/home/{{ sudo_user }}/.kube"
+kubeconfig: "{{ kubeconfig_dir }}/config"

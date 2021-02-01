@@ -1,9 +1,16 @@
 ---
 controllers:
     hosts:
-        controller.local:
+        controller0:
+            ansible_host: 11.22.33.99
+    vars:
+      sudo_user: rcon
 
 workers:
     hosts:
-        worker0.local:
-        worker1.local:
+        worker0:
+            ansible_host: 11.22.33.10
+        worker1:
+            ansible_host: 11.22.33.11
+    vars:
+      sudo_user: rcon

@@ -1,4 +1,15 @@
 ---
+- name: Update docker daemon
+  copy:
+    backup: true
+    dest: /etc/docker/daemon.json
+    src: "{{ docker_daemon_src }}"
+
+- name: Restart docker daemon
+  systemd:
+    name: docker
+    state: restarted
+
 - name: Add kubernetes repo
   yum_repository:
     baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
@@ -18,8 +29,11 @@
   vars:
     ansible_python_interpreter: /usr/bin/python
 
-- name: Start kubectl
-  systemd:
-    enabled: yes    
-    name: kubelet
-    state: started
+- name: Configure sysctl
+  copy:
+    backup: true
+    dest: /etc/sysctl.d/k8s.conf
+    src: "{{ k8s_sysctl_conf }}"
+
+- name: Reload sysctl
+  command: sysctl --system

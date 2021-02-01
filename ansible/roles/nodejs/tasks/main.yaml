@@ -1,14 +1,17 @@
 ---
 - name: Download nodejs repo installer
   get_url:
-      dest: /tmp/node-installer.sh
-      url: https://rpm.nodesource.com/setup_10.x
+    dest: "{{ node_repo_installer }}"
+    url: https://rpm.nodesource.com/setup_10.x
+    mode: 0755
 
 - name: Run nodejs repo installer
-  shell: /tmp/node-repo-installer.sh
+  command: "{{ node_repo_installer }}"
 
-- name: Install node
-  yum:
-      name:
-        - nodejs
-      state: present
+- name: Install nodejs
+  dnf:
+    name:
+      - nodejs
+    state: present
+  vars:
+    ansible_python_interpreter: /usr/bin/python

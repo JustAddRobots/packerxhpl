@@ -1,5 +1,5 @@
 ---
-- hosts: controller
+- hosts: worker
   become: true
   roles:
     - useradd
@@ -8,8 +8,6 @@
     - hostnamectl
     - avahi
     - nginx
-    - mariadb
-    - webmin
     - docker
-    - postman
+    - kubernetes
     - reboot
