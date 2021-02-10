@@ -1,6 +1,16 @@
 Changelog
 =========
 
+0.4.0 (2021-02-01)
+------------------
+- ISSUE-012: Added postdeploy kubernetes tasks. (fb2634f) [JustAddRobots]
+- ISSUE-012: Fixed worker module, ready for hostname/kubernetes update. (2f90dff) [JustAddRobots]
+- ISSUE-012: Added esxi terraform provider, removed vix. (792b870) [JustAddRobots]
+- ISSUE-012: Added tf bits for testing kubernetes deployment. (f3de94f) [JustAddRobots]
+- ISSUE-012: Added kubernetes, jenkins smee, refactored for configs. (4532e8e) [JustAddRobots]
+- ISSUE-012: Separated kubernetes, controller/worker playbooks. (88160c3) [JustAddRobots]
+- ISSUE-012: Added kubernetes role. (9400caa) [JustAddRobots]
+
 0.3.0 (2021-01-21)
 ------------------
 - ISSUE-010: Added postman role. (1bfe3f3) [JustAddRobots]
