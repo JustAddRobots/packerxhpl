@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.5.0 (2021-02-10)
+------------------
+- ISSUE-017: Added list under workflow-in-action. (983e692) [JustAddRobots]
+- ISSUE-017: Added readme bits. (1e1fb1f) [JustAddRobots]
+
 0.4.0 (2021-02-01)
 ------------------
 - ISSUE-012: Added postdeploy kubernetes tasks. (fb2634f) [JustAddRobots]
