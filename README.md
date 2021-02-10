@@ -44,10 +44,15 @@ Ansible is used for provisioning machine images as well as post-deployment VMs.
 ## Workflow in Action
 
 ### 01 - Packer Build
+* Build controller machine image
+* Build worker machine image
+
 
 ![Packer Build](./readme/packerxhpl-clip-01-800x450.gif)
 
 ### 02 - Terraform Apply / Destroy
+* Deploy controller and worker nodes
+* Destroy controller and worker nodes
 
 ![Terraform Apply](./readme/packerxhpl-clip-02-800x450.gif)
 
